@@ -28,13 +28,18 @@ function xlLiveRegistre() {
   <p class="small muted" style="margin:4px 0 10px">Modifiez P ou G (1 à 5) : Score, Priorité et Rang se recalculent comme dans le classeur, et tout le site suit. <code>Score = P×G</code> · <code>Priorité = SI(score ≥ 15 ; "Élevé" ; SI(score ≥ 6 ; "Modéré" ; "Faible"))</code> · <code>Clé = score×10000 + G×1000 + P×100 + (12 − ligne)</code> · <code>Rang = RANG(clé)</code>.</p>
   <div class="tw"><table><thead><tr><th>ID</th><th>Risque</th><th>P</th><th>G</th><th>Score</th><th>Priorité</th><th>Clé de tri</th><th>Rang</th></tr></thead><tbody>${rows.map(r => { const c = sc(r), li = D.risks.indexOf(r) + 2, key = c.s * 10000 + c.g * 1000 + c.p * 100 + (D.risks.length + 1 - li); return `<tr><td>${chip(r)}</td><td>${esc(r.titre)}</td><td><input type="number" min="1" max="5" value="${c.p}" data-xl="${r.id}:p" class="xl-in" aria-label="P de ${r.id}"></td><td><input type="number" min="1" max="5" value="${c.g}" data-xl="${r.id}:g" class="xl-in" aria-label="G de ${r.id}"></td><td class="score" style="color:var(--${zone(c.s)})">${c.s}</td><td>${tagZ(c.s)}</td><td class="small muted">${key}</td><td><b>${rankOf(r.id)}</b></td></tr>`; }).join('')}</tbody></table></div></div>`;
 }
-function xlConsistency() {
-  if (hasOv() || S.mode !== 'now') return '<p class="small muted">Comparaison suspendue : des notes sont modifiées ou une autre cotation est affichée. Revenez aux valeurs du classeur pour la relancer.</p>';
+function xlCell(sheet, addr) { const s = PM_XL.sheets.find(x => x.name === sheet), m = addr.match(/^([A-Z]+)(\d+)$/), r = s.rows[+m[2] - 1]; return (r && r[m[1].charCodeAt(0) - 65]) || {}; }
+function xlChecks() {
+  if (hasOv() || S.mode !== 'now') return null;
   const b = D.risks.map(r => ({ r, s: r.p * r.g })), hi = b.filter(x => x.s >= 15).length, avg = Math.round(b.reduce((t, x) => t + x.s, 0) / b.length * 10) / 10, top = [...b].sort((a, c) => c.s - a.s || c.r.g - a.r.g || c.r.p - a.r.p || a.r.id.localeCompare(c.r.id)).slice(0, 5).map(x => x.r.id).join(',');
   const pl = PM_XL.sheets.find(s => s.name === 'Plan'), levRow = pl.rows.find(r => r[0] && typeof r[0].v === 'string' && r[0].v.startsWith('Levier')), idx = pl.rows.indexOf(levRow), xlLev = pl.rows[idx + 1].slice(3, 3 + D.recos.length).map(e => e.v).join(','), jsLev = recoLeverage().map(x => x.d).join(',');
   const aft = planAll(), hiAfter = aft.filter(x => x.s >= 15).length, xlAfter = pl.rows.find(r => r[1] && r[1].v === 'Risques élevés (score ≥ 15)')[20].v;
   const xlTop = PM_XL.sheets.find(s => s.name === 'Synthèse').rows.filter(r => r[0] && typeof r[0].v === 'number' && r[1] && /^R\d\d$/.test(r[1].v)).map(r => r[1].v).join(',');
-  const chk = [['Nombre de risques', xlFind('Synthèse', 'Risques au registre', 1), D.risks.length], ['Risques élevés', xlFind('Synthèse', 'Risques élevés (15–25)', 1), hi], ['Score P×G moyen', xlFind('Synthèse', 'Score P×G moyen', 1), avg], ['Top 5 du classement', xlTop, top], ['Levier des recommandations (REC1 à REC7)', xlLev, jsLev], ['Risques élevés après le plan complet', xlAfter, hiAfter]];
+  return [['Nombre de risques', xlFind('Synthèse', 'Risques au registre', 1), D.risks.length], ['Risques élevés', xlFind('Synthèse', 'Risques élevés (15–25)', 1), hi], ['Score P×G moyen', xlFind('Synthèse', 'Score P×G moyen', 1), avg], ['Top 5 du classement', xlTop, top], ['Levier des recommandations (REC1 à REC7)', xlLev, jsLev], ['Risques élevés après le plan complet', xlAfter, hiAfter]];
+}
+function xlConsistency() {
+  const chk = xlChecks();
+  if (!chk) return '<p class="small muted">Comparaison suspendue : des notes sont modifiées ou une autre cotation est affichée. Revenez aux valeurs du classeur pour la relancer.</p>';
   return `<div class="tw"><table class="xl2"><thead><tr><th>Résultat</th><th>Classeur Excel</th><th>Site</th><th></th></tr></thead><tbody>${chk.map(([l, a, c]) => `<tr><td>${l}</td><td>${esc(a)}</td><td>${esc(c)}</td><td><b class="${String(a) === String(c) ? 'ok' : 'ko'}">${String(a) === String(c) ? '✔ identique' : '✘ écart'}</b></td></tr>`).join('')}</tbody></table></div>`;
 }
 V.excel = () => {
