@@ -103,3 +103,10 @@ document.addEventListener('keydown', e => {
     h.classList.toggle('on'); }
   else if (e.key === 'Escape' && $('#help') && $('#help').classList.contains('on')) $('#help').classList.remove('on');
 }, true);
+
+/* Résumé d'un plan (ensemble de recommandations actives) : mêmes calculs que la feuille Plan du classeur */
+function planSummary(ids) {
+  const keep = S.plan, mode = S.mode; S.plan = new Set(ids || D.recos.map(r => r.id)); S.mode = 'plan'; const a = D.risks.map(r => sc(r).s); S.plan = keep; S.mode = mode;
+  const b = D.risks.map(r => { const o = S.ov[r.id] || r; return o.p * o.g; }), hi = x => x.filter(v => v >= 15).length, av = x => (x.reduce((t, v) => t + v, 0) / x.length).toFixed(1).replace('.', ',');
+  return { hb: hi(b), ha: hi(a), ab: av(b), aa: av(a) };
+}
