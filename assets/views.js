@@ -13,6 +13,7 @@ V.dash = () => {
   const open = INC.filter(i => i.statut !== 'Clôturé').length, c12 = INC.filter(i => i.statut !== 'Clôturé' && ['C1', 'C2'].includes(i.crit)).length;
   const mat = (D.coso.reduce((a, c) => a + c.mat, 0) / 5).toFixed(1);
   return hd('Tableau de bord', `PayMaroc — ${D.meta.problematique}`) + `
+  ${heroBlock()}
   <div class="note" style="margin-bottom:14px"><b>Lecture :</b> ${S.mode === 'now' ? 'cotation actuelle' : 'cotation cible après actions (hypothèse)'} · ${D.meta.regleCotation}</div>
   <div class="grid g4" style="margin-bottom:14px">
     ${kpi(rk.length, S.cat ? 'risques ' + D.cats[S.cat].toLowerCase() + 's' : 'risques au registre', '3 catégories · ' + D.risks.filter(r => r.basis === 'Fait du cas').length + ' faits du cas, ' + D.risks.filter(r => r.basis !== 'Fait du cas').length + ' inférences')}

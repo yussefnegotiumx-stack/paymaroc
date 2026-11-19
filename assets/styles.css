@@ -259,3 +259,41 @@ code{background:var(--surface2);padding:1px 5px;border-radius:4px;font-size:.85e
 kbd{font:inherit;font-size:.7rem;padding:0 5px;border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;background:var(--surface2);margin-left:4px}
 .pg{height:10px;background:var(--surface2);border-radius:6px;overflow:hidden;margin-top:8px}.pg i{display:block;height:100%;background:var(--brand);border-radius:6px;transition:width .3s}
 ul.chk{list-style:none;margin:0;padding:0;font-size:.88rem}ul.chk li{padding:3px 0}
+
+/* ---- fil conducteur, héros, compromis, classeur, animations ---- */
+h1,h2,h3,.kpi .v,.fc .q,.hero-q{font-family:"Space Grotesk",Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
+.thread{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:0 0 14px;padding:8px 10px;background:color-mix(in srgb,var(--surface) 85%,transparent);border:1px solid var(--line);border-radius:12px;font-size:.8rem}
+.thread a{display:inline-flex;align-items:baseline;gap:6px;padding:4px 10px;border-radius:999px;text-decoration:none;color:var(--ink2);border:1px solid transparent}
+.thread a b{font-family:"Space Grotesk",Inter,sans-serif;font-size:.95rem;color:var(--ink)}
+.thread a:hover{background:var(--surface2)}.thread a.on{background:var(--brand);color:#fff}.thread a.on b{color:#fff}
+.thread .ar{color:var(--muted);font-style:normal}
+.hero{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:26px;margin-bottom:14px;padding:22px 24px;background:linear-gradient(135deg,color-mix(in srgb,var(--brand-tint) 70%,var(--surface)),var(--surface) 60%)}
+.hero .kick{font-size:.72rem;text-transform:uppercase;letter-spacing:.12em;color:var(--brand);font-weight:700}
+.hero-q{font-size:1.5rem;line-height:1.25;margin:4px 0 0;letter-spacing:-.02em;font-weight:700}
+.ins{margin:6px 0 0;padding-left:1.1em;font-size:.88rem}.ins li{margin:5px 0}
+.bar.lev{text-decoration:none;color:inherit}
+@media (max-width:980px){.hero{grid-template-columns:1fr;padding:16px}.hero-q{font-size:1.25rem}}
+.tri-out{margin-top:6px}
+#tri{display:block;margin:0 auto}#tri:focus-visible{outline:2px solid var(--brand);outline-offset:2px;border-radius:8px}
+body.hlon [data-risk]:not(.hl){opacity:.38;transition:opacity .15s}
+body.hlon [data-risk].hl{outline:2px solid var(--brand);outline-offset:1px;border-radius:6px}
+.sheets{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.sheet-tab{display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:9px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface);cursor:pointer;text-align:left}
+.sheet-tab span{font-size:.7rem;color:var(--muted)}.sheet-tab:hover{border-color:var(--brand)}.sheet-tab.on{background:var(--brand);border-color:var(--brand);color:#fff}.sheet-tab.on span{color:#d7efe0}
+.xl-wrap{margin-top:0}.xlbox{max-height:620px}
+table.xl{width:auto;min-width:100%;font-size:.78rem;table-layout:fixed}table.xl td{border:1px solid var(--line);padding:4px 6px;overflow-wrap:anywhere;background:var(--surface)}
+table.xl td.xl-h{background:var(--brand);color:#fff;font-weight:700;text-align:center;position:sticky;top:0;z-index:1}table.xl tr:hover td{background:var(--surface2)}
+table.xl td.xl-h:hover{background:var(--brand)}table.xl td.xl-f{background:color-mix(in srgb,var(--brand-tint) 60%,var(--surface))}table.xl td.xl-b{font-weight:700}
+table.xl td code{font-size:.72rem;color:var(--accent);white-space:pre-wrap}table.xl .xl-gap td{border:0;height:10px;background:transparent!important}
+table.xl td.z-hi,table.xl td.z-mid,table.xl td.z-lo{font-weight:700;text-align:center}
+.xl-key{padding:0 6px;border:1px solid var(--line);border-radius:4px;color:#17231d}
+.xl-in{width:56px;padding:5px 6px;text-align:center;border:1px solid var(--mid);background:var(--mid-bg);border-radius:6px;font-weight:700}
+table.xl2{width:100%;font-size:.84rem}table.xl2 th{position:static}
+.card code,.note code{background:var(--surface2);padding:1px 5px;border-radius:4px;font-size:.78rem}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes pop{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:none}}
+#view.anim>.card,#view.anim>.grid>.card,#view.anim>.thread{animation:rise .45s cubic-bezier(.2,.7,.2,1) both}
+#view.anim>.grid>.card:nth-child(2){animation-delay:.05s}#view.anim>.grid>.card:nth-child(3){animation-delay:.1s}#view.anim>.grid>.card:nth-child(4){animation-delay:.15s}
+#view.anim .bar .fl{transform-origin:left;animation:grow .7s cubic-bezier(.2,.7,.2,1) both}
+#view.anim .hm .cell{animation:pop .4s both;animation-delay:calc(var(--i,0)*16ms)}

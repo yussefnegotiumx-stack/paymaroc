@@ -1,5 +1,5 @@
-const NAV = [['grp', 'Pilotage'], ['dash', '◧', 'Tableau de bord'], ['grp', 'Analyse'], ['cadrage', '◎', 'Cadrage et hypothèses'], ['registre', '☰', 'Registre des risques'], ['carto', '▦', 'Cartographie P × G'], ['acteurs', '⚇', 'Acteurs et conflits'], ['gouv', '⛓', 'Gouvernance et RACI'], ['coso', '⬠', 'Diagnostic COSO'], ['incidents', '⚑', 'Incidents'], ['recos', '✔', 'Recommandations'], ['grp', 'Méthode'], ['transparence', '◌', 'Transparence'], ['entrainement', '✎', 'Entraînement'], ['grp', 'Livrables'], ['rapport', '❡', 'Rapport (L1)'], ['note', '✉', 'Note de décision (L4)'], ['soutenance', '▶', 'Soutenance (L5)'], ['grille', '☑', 'Grille de notation'], ['qualite', '✓', 'Contrôle qualité']];
-const TITLES = { dash: 'Tableau de bord', cadrage: 'Cadrage', registre: 'Registre', carto: 'Cartographie', acteurs: 'Acteurs', gouv: 'Gouvernance', coso: 'COSO', incidents: 'Incidents', recos: 'Recommandations', rapport: 'Rapport', note: 'Note de décision', soutenance: 'Soutenance', qualite: 'Qualité', transparence: 'Transparence', entrainement: 'Entraînement', grille: 'Grille de notation' };
+const NAV = [['grp', 'Pilotage'], ['dash', '◧', 'Tableau de bord'], ['grp', 'Analyse'], ['cadrage', '◎', 'Cadrage et hypothèses'], ['registre', '☰', 'Registre des risques'], ['carto', '▦', 'Cartographie P × G'], ['acteurs', '⚇', 'Acteurs et conflits'], ['gouv', '⛓', 'Gouvernance et RACI'], ['coso', '⬠', 'Diagnostic COSO'], ['incidents', '⚑', 'Incidents'], ['recos', '✔', 'Recommandations'], ['grp', 'Méthode'], ['transparence', '◌', 'Transparence'], ['entrainement', '✎', 'Entraînement'], ['grp', 'Livrables'], ['excel', '▤', 'Classeur Excel (L2)'], ['rapport', '❡', 'Rapport (L1)'], ['note', '✉', 'Note de décision (L4)'], ['soutenance', '▶', 'Soutenance (L5)'], ['grille', '☑', 'Grille de notation'], ['qualite', '✓', 'Contrôle qualité']];
+const TITLES = { dash: 'Tableau de bord', cadrage: 'Cadrage', registre: 'Registre', carto: 'Cartographie', acteurs: 'Acteurs', gouv: 'Gouvernance', coso: 'COSO', incidents: 'Incidents', recos: 'Recommandations', rapport: 'Rapport', note: 'Note de décision', soutenance: 'Soutenance', qualite: 'Qualité', transparence: 'Transparence', entrainement: 'Entraînement', grille: 'Grille de notation', excel: 'Classeur Excel' };
 let cur = 'dash', KEEP = false;
 function shell() {
   $('#app').innerHTML = `<aside class="side" id="side"><div class="brand"><div class="logo">PM</div><div><b>PayMaroc</b><small>Maîtrise des risques · G5 · 5GF</small></div></div>
@@ -15,6 +15,7 @@ function render() {
   if (cur === 'rapport') h = `<div class="pbtn"><button class="btn pri" data-print="report">🖨 Imprimer / PDF</button><a class="btn" href="downloads/Livrable1_Rapport_PayMaroc_G5.docx" download>⬇ Word (.docx)</a><button class="btn" id="pages">Estimer les pages</button><span id="pg" class="small muted" style="align-self:center"></span></div>${REPORT()}`;
   else if (cur === 'note') h = `<div class="pbtn"><button class="btn pri" data-print="note">🖨 Imprimer / PDF (1 page A4)</button><a class="btn" href="downloads/Livrable4_Note_de_decision_PayMaroc_G5.docx" download>⬇ Word (.docx)</a></div>${NOTE()}`;
   else h = V[cur]();
+  if (!doc) h = thread(cur) + h;
   $('#view').innerHTML = h; S.mode = keepMode;
   $$('#nav a').forEach(a => a.classList.toggle('on', a.dataset.n === cur));
   $('#m-now').setAttribute('aria-pressed', S.mode === 'now'); $('#m-tgt').setAttribute('aria-pressed', S.mode === 'target'); $('#m-plan').setAttribute('aria-pressed', S.mode === 'plan'); $('#tr-toggle').setAttribute('aria-pressed', S.tr);
@@ -22,7 +23,7 @@ function render() {
   document.title = `${TITLES[cur]} — PayMaroc · Maîtrise des risques (G5)`;
   if (cur === 'incidents') simUpdate();
   if (cur === 'gouv') { const ok = D.raci.rows.every(r => r.v.filter(x => x.startsWith('A')).length === 1); $('#raci-check').innerHTML = `<b class="${ok ? 'ok' : 'ko'}">${ok ? '✔' : '✘'}</b> Contrôle : un seul « A » par activité (${D.raci.rows.length} lignes).`; }
-  $('#side').classList.remove('open'); if (!KEEP) window.scrollTo(0, 0); KEEP = false;
+  $('#side').classList.remove('open'); if (!KEEP) window.scrollTo(0, 0); $('#view').classList.toggle('anim', !KEEP); postRender(!KEEP); KEEP = false;
 }
 function route() { const h = (location.hash || '#/dash').replace('#/', ''); cur = V[h] || ['rapport', 'note'].includes(h) ? h : 'dash'; render(); }
 function calcBlock(r, c) {
