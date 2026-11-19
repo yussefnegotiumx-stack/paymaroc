@@ -5,11 +5,13 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>PayMaroc — Maîtrise des risques (G5 · 5GF)</title>
 <meta name="description" content="Site interactif et tableau de bord : maîtrise des risques d'une fintech en phase de croissance (PayMaroc, cas fictif) — EMSI Tanger, Génie Financier 5GF.">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@500;700&display=swap">
 <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body>
-<button class="btn menu-btn noprint" style="position:fixed;right:12px;top:10px;z-index:70" onclick="document.getElementById('side').classList.toggle('open')" aria-label="Menu">☰ Menu</button>
+<header class="topbar noprint"><a href="#/dash" class="brand" aria-label="PayMaroc"><svg class="logo-mark" viewBox="0 0 48 48" role="img" aria-label="Logo PayMaroc"><rect width="48" height="48" rx="12" fill="var(--brand)"/><g fill="none" stroke="var(--surface)" stroke-opacity=".4"><rect x="8" y="8" width="8" height="8" rx="2"/><rect x="8" y="20" width="8" height="8" rx="2"/><rect x="20" y="8" width="8" height="8" rx="2"/></g><g fill="var(--surface)"><rect x="7.5" y="31.5" width="9" height="9" rx="2.2"/><rect x="19.5" y="31.5" width="9" height="9" rx="2.2"/><rect x="19.5" y="19.5" width="9" height="9" rx="2.2"/><rect x="31.5" y="31.5" width="9" height="9" rx="2.2"/><rect x="31.5" y="19.5" width="9" height="9" rx="2.2"/></g><rect x="31.5" y="7.5" width="9" height="9" rx="2.2" fill="#F0B656"/></svg><b class="wm">Pay<span>Maroc</span></b></a><button class="btn menu-btn" id="menubtn" aria-label="Menu">☰ Menu</button></header>
+<script>document.addEventListener('click',function(e){if(e.target.closest('#menubtn'))document.getElementById('side').classList.toggle('open')})</script>
 <div class="app" id="app"></div>
 <noscript>Ce site nécessite JavaScript.</noscript>
 <script src="assets/data.js"></script>
