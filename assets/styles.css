@@ -89,7 +89,7 @@ button.chip{font-family:inherit}
 .bar{display:grid;grid-template-columns:200px 1fr 38px;gap:10px;align-items:center;font-size:.84rem;cursor:pointer}
 .bar .t{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .bar .tr{height:14px;background:var(--surface2);border-radius:4px 7px 7px 4px;overflow:hidden}
-.bar .fl{height:100%;border-radius:0 4px 4px 0;min-width:3px;transition:width .35s}
+.bar .fl{display:block;height:100%;border-radius:0 4px 4px 0;min-width:3px;transition:width .35s}
 .bar:hover .t{color:var(--brand);text-decoration:underline}
 /* chain */
 .chain{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:0;align-items:stretch}
