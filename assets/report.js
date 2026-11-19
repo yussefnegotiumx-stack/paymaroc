@@ -1,5 +1,6 @@
 /* Rapport (Livrable 1), Note de décision (Livrable 4), Présentation (Livrable 5) — générés depuis les données */
 let _t = 0, _f = 0;
+const LOGO_H = '<svg viewBox="0 0 250 48" width="280" height="54" aria-hidden="true" role="img" aria-label="PayMaroc, maîtrise des risques">  <rect width="48" height="48" rx="12" fill="#1F6B45"/>  <g fill="none" stroke="#FFFFFF" stroke-opacity=".38" stroke-width="1">    <rect x="8" y="8" width="8" height="8" rx="2"/><rect x="8" y="20" width="8" height="8" rx="2"/><rect x="20" y="8" width="8" height="8" rx="2"/>  </g>  <g fill="#FFFFFF">    <rect x="7.5" y="31.5" width="9" height="9" rx="2.2"/>    <rect x="19.5" y="31.5" width="9" height="9" rx="2.2"/><rect x="19.5" y="19.5" width="9" height="9" rx="2.2"/>    <rect x="31.5" y="31.5" width="9" height="9" rx="2.2"/><rect x="31.5" y="19.5" width="9" height="9" rx="2.2"/>  </g>  <rect x="31.5" y="7.5" width="9" height="9" rx="2.2" fill="#F0B656"/>  <text x="60" y="27" font-family="\'Space Grotesk\',\'Inter\',\'Segoe UI\',Arial,sans-serif" font-size="25" font-weight="700" fill="#17231D">Pay<tspan fill="#1F6B45">Maroc</tspan></text>  <text x="61" y="41" font-family="\'Inter\',\'Segoe UI\',Arial,sans-serif" font-size="9.5" letter-spacing="1.4" fill="#6B7B72">MAÎTRISE DES RISQUES</text></svg>';
 const tb = (title, head, rows, src) => `<div class="fig"><div class="cap">Tableau ${++_t}. ${title}</div><table><thead><tr>${head.map(h => `<th>${h}</th>`).join('')}</tr></thead><tbody>${rows.map(r => `<tr>${r.map(c => `<td>${c}</td>`).join('')}</tr>`).join('')}</tbody></table>${src ? `<div class="src">${src}</div>` : ''}</div>`;
 const fg = (title, inner, src) => `<div class="fig"><div class="cap">Figure ${++_f}. ${title}</div>${inner}${src ? `<div class="src">${src}</div>` : ''}</div>`;
 const W3 = () => [
@@ -12,7 +13,7 @@ function REPORT() {
   const s = r => sc(r).s;
   const keep = S.mode; // le rapport est toujours rédigé sur la cotation actuelle
   return `<div class="paper" id="report">
-<section class="cover"><div style="color:#1f6b45;font-weight:700;letter-spacing:.1em;font-size:11pt">${M.ecole.toUpperCase()} · ÉCOLE MAROCAINE DES SCIENCES DE L'INGÉNIEUR</div>
+<section class="cover"><div class="cover-logo" style="text-align:center;margin-bottom:34px">${LOGO_H}</div><div style="color:#1f6b45;font-weight:700;letter-spacing:.1em;font-size:11pt">${M.ecole.toUpperCase()} · ÉCOLE MAROCAINE DES SCIENCES DE L'INGÉNIEUR</div>
 <div style="margin:40px 0 10px;font-size:11pt">Contrôle continu intégré — Contrôle interne × Gestion des risques financiers</div>
 <h1>${M.titre}</h1><div style="font-size:15pt">Étude de cas : ${M.organisation}</div><div style="margin-top:30px;font-size:11pt">${M.sujet} · Groupe ${M.groupe} · ${M.filiere}</div>
 <div style="font-size:12pt;margin-top:14px"><b>${M.membres.join('<br>')}</b></div><div style="margin-top:30px">Encadrante : ${M.professeur}<br>Année universitaire ${M.annee}</div>
