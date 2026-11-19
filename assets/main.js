@@ -57,7 +57,7 @@ function simUpdate() { const c = simCrit(), n = D.grille.niveaux.find(x => x.c =
 let dk = { i: 0, t0: null, iv: null };
 function deckShow(i) {
   dk.i = Math.max(0, Math.min(SLIDES.length - 1, i)); const s = SLIDES[dk.i];
-  $('#stage').innerHTML = `<div class="slide">${s.h()}<div class="sn">${dk.i + 1} / ${SLIDES.length} · ${s.who}</div></div>`;
+  $('#stage').innerHTML = `<div class="slide">${dk.i === 0 ? '' : '<span class="slide-logo">' + LOGO_M.replace('width="26" height="26"', 'width="34" height="34"') + '</span>'}${s.h()}<div class="sn">${dk.i + 1} / ${SLIDES.length} · ${s.who}</div></div>`;
   $('#dnotes').textContent = `Notes (${s.who}, ~${s.sec} s) : ${s.notes}`; $('#dpos').textContent = `${dk.i + 1}/${SLIDES.length} — ${s.t}`;
 }
 function deckOpen() { const m = S.mode; S.mode = 'now'; $('#deck').classList.add('on'); deckShow(0); dk.m = m; }

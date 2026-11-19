@@ -313,3 +313,5 @@ table.xl2{width:100%;font-size:.84rem}table.xl2 th{position:static}
   .menu-btn{position:static!important}
   .side{top:0}
 }
+
+.slide-logo{position:absolute;top:22px;right:26px;opacity:.95}.slide-logo svg{margin:0!important;display:block}
